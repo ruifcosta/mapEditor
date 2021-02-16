@@ -45,6 +45,12 @@ public class MovingKeyboard implements KeyboardHandler {
             case KeyboardEvent.KEY_L:
                 grid.load();
                 break;
+            case KeyboardEvent.KEY_S:
+                grid.save();
+                break;
+            case KeyboardEvent.KEY_X:
+                System.exit(0);
+                break;
 
         }
     }

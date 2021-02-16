@@ -5,7 +5,7 @@ import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 
-import java.awt.*;
+
 
 public class Painter {
     Grid grid;
@@ -23,10 +23,10 @@ public class Painter {
         MovingKeyboard move = new MovingKeyboard(grid);
         Keyboard keyboard = new Keyboard(move);
 
-        KeyboardEvent a = new KeyboardEvent();
-        a.setKey(KeyboardEvent.KEY_UP);
-        a.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
-        keyboard.addEventListener(a);
+        KeyboardEvent up = new KeyboardEvent();
+        up.setKey(KeyboardEvent.KEY_UP);
+        up.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        keyboard.addEventListener(up);
 
 
         KeyboardEvent e = new KeyboardEvent();
@@ -60,6 +60,16 @@ public class Painter {
         c.setKey(KeyboardEvent.KEY_L);
         c.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
         keyboard.addEventListener(c);
+
+        KeyboardEvent d = new KeyboardEvent();
+        d.setKey(KeyboardEvent.KEY_S);
+        d.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        keyboard.addEventListener(d);
+
+        KeyboardEvent f = new KeyboardEvent();
+        f.setKey(KeyboardEvent.KEY_X);
+        f.setKeyboardEventType(KeyboardEventType.KEY_RELEASED);
+        keyboard.addEventListener(f);
     }
 
 

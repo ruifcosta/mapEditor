@@ -22,60 +22,18 @@ public class Grid {
 
     public void init() {
 
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                grid[j][i] = new Rectangle(cellSize * j + PADDING, cellSize * i + PADDING, cellSize, cellSize);
-                grid[j][i].draw();
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                grid[col][row] = new Rectangle(cellSize * col + PADDING, cellSize * row + PADDING, cellSize, cellSize);
+                grid[col][row].draw();
             }
         }
-        car = new Rectangle(110, 110, cellSize, cellSize);
+        car = new Rectangle(getColToX(cols/2), getRowToY(rows/2), cellSize, cellSize);
         car.setColor(Color.RED);
         car.fill();
     }
 
     public void clear() {
-
-        // create a new file reader
-        // create a new file writer
-        FileWriter writer = null;
-        try {
-            writer = new FileWriter("grid.txt");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        // wrap the file writer using a buffered writer
-        BufferedWriter bWriter = new BufferedWriter(writer);
-        String text = "";
-
-        for (int i = 0; i < cols; i++) {
-            for (int j = 0; j < rows; j++) {
-                if (grid[j][i].isFilled()) {
-                    text += "1 ";
-                } else {
-                    text += "0 ";
-                }
-            }
-            text = text + "\n";
-        }
-
-        //add text to buffer
-        try {
-            bWriter.write(text);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            bWriter.flush(); // if the buffer is not full, flush will force disk write
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        try {
-            bWriter.close(); // auto-flush is done on close
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -151,6 +109,7 @@ public class Grid {
     }
 
     public void load() {
+        clear();
         // create a new file reader
         FileReader reader = null;
         try {
@@ -162,7 +121,7 @@ public class Grid {
             String line = "";
             int row = 0;
             // using the buffered reader we can read lines
-            while ((line = bReader.readLine()) == null) {
+            while ((line = bReader.readLine()) != null) {
 
                 System.out.println();
                 String[] splitTheLine = line.split(" ");
@@ -173,7 +132,6 @@ public class Grid {
                         grid[col][row].draw();
 
                     } else {
-                        System.out.println(col + "   " + row);
                         grid[col][row].setColor(Color.BLACK);
                         grid[col][row].fill();
                     }
@@ -198,4 +156,46 @@ public class Grid {
 
     }
 
+    public void save() {
+        // create a new file writer
+        FileWriter writer = null;
+        try {
+            writer = new FileWriter("grid.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // wrap the file writer using a buffered writer
+        BufferedWriter bWriter = new BufferedWriter(writer);
+        String text = "";
+
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                if (grid[col][row].isFilled()) {
+                    text += "1 ";
+                } else {
+                    text += "0 ";
+                }
+            }
+            text = text + "\n";
+        }
+
+        //add text to buffer
+        try {
+            bWriter.write(text);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            bWriter.flush(); // if the buffer is not full, flush will force disk write
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        try {
+            bWriter.close(); // auto-flush is done on close
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
