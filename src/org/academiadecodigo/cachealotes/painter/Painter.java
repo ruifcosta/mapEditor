@@ -1,26 +1,29 @@
-package org.academiadecodigo.cachealotes;
+package org.academiadecodigo.cachealotes.painter;
 
+import org.academiadecodigo.cachealotes.grid.Brush;
+import org.academiadecodigo.cachealotes.grid.Grid;
+import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.keyboard.Keyboard;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEventType;
-import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 
+import java.io.*;
 
 
 public class Painter {
     Grid grid;
+    Brush brush;
 
 
 
     public Painter(int col,int row) {
         this.grid = new Grid(col,row);
-        grid.init();
-
-
+        brush = new Brush(col,row);
+        init();
     }
 
     public void init(){
-        MovingKeyboard move = new MovingKeyboard(grid);
+        MovingKeyboard move = new MovingKeyboard(this);
         Keyboard keyboard = new Keyboard(move);
 
         KeyboardEvent up = new KeyboardEvent();
@@ -72,5 +75,14 @@ public class Painter {
         keyboard.addEventListener(f);
     }
 
+    public void paint(){
+        brush.paint();
+    }
 
+    public void clear() {
+    brush.clear();
+    }
+
+    public void load(){brush.load();}
+    public void save(){brush.save();}
 }

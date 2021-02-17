@@ -1,111 +1,73 @@
-package org.academiadecodigo.cachealotes;
+package org.academiadecodigo.cachealotes.grid;
 
 import org.academiadecodigo.simplegraphics.graphics.Color;
 import org.academiadecodigo.simplegraphics.graphics.Rectangle;
 
 import java.io.*;
 
-public class Grid {
+public class Brush extends Grid {
 
-    private Rectangle[][] grid;
-    private int cols;
-    private int rows;
-    private int cellSize = 20;
-    private static final int PADDING = 10;
-    private Rectangle car;
-
-    public Grid(int cols, int rows) {
-        grid = new Rectangle[cols][rows];
-        this.cols = cols;
-        this.rows = rows;
-    }
-
-    public void init() {
-
-        for (int row = 0; row < rows; row++) {
-            for (int col = 0; col < cols; col++) {
-                grid[col][row] = new Rectangle(cellSize * col + PADDING, cellSize * row + PADDING, cellSize, cellSize);
-                grid[col][row].draw();
-            }
-        }
-        car = new Rectangle(getColToX(cols/2), getRowToY(rows/2), cellSize, cellSize);
-        car.setColor(Color.RED);
-        car.fill();
-    }
-
-    public void clear() {
-
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                grid[j][i].delete();
-                grid[j][i].draw();
-            }
-        }
-    }
-
-    public int getCols() {
-        return cols;
-    }
+    private Rectangle brush;
 
 
-    public int getRows() {
-        return rows;
-    }
-
-    public int getColToX(int col) {
-        return col * cellSize + PADDING;
-    }
-
-
-    public int getRowToY(int row) {
-        return row * cellSize + PADDING;
-    }
-
-    public int getXtoCol(int x) {
-        return (x - PADDING) / cellSize;
-    }
-
-
-    public int getYtoRow(int y) {
-        return (y - PADDING) / cellSize;
+    public Brush(int cols, int rows) {
+        super(cols, rows);
+        brush = new Rectangle(getColToX(cols/2), getRowToY(rows/2), cellSize, cellSize);
+        brush.setColor(Color.RED);
+        brush.fill();
     }
 
     public void moveUP() {
-        if (car.getY() <= PADDING) {
+        if (brush.getY() <= Grid.PADDING) {
             return;
         }
-        car.translate(0, -cellSize);
+        brush.translate(0, -cellSize);
 
     }
 
     public void moveDown() {
-        if (car.getY() + cellSize >= getRowToY(getRows())) {
+        if (brush.getY() + cellSize >= getRowToY(getRows())) {
             return;
         }
-        car.translate(0, +cellSize);
+        brush.translate(0, +cellSize);
 
     }
 
     public void moveLeft() {
-        if (car.getX() <= PADDING) {
+        if (brush.getX() <= PADDING) {
             return;
         }
-        car.translate(-cellSize, 0);
+        brush.translate(-cellSize, 0);
 
     }
 
     public void moveRight() {
-        if (car.getX() + cellSize >= getColToX(cols)) {
+        if (brush.getX() + cellSize >= getColToX(cols)) {
             return;
         }
-        car.translate(cellSize, 0);
+        brush.translate(cellSize, 0);
 
     }
-
     public void paint() {
-        int col = getXtoCol(car.getX());
-        int row = getYtoRow(car.getY());
+        int col = getXtoCol(brush.getX());
+        int row = getYtoRow(brush.getY());
+
+
+       if (grid[col][row].isFilled()) {
+            grid[col][row].delete();
+            grid[col][row].draw();
+            return;
+        }
         grid[col][row].fill();
+    }
+
+    public void clear() {
+        for (int row = 0; row < rows; row++) {
+            for (int col = 0; col < cols; col++) {
+                grid[col][row].delete();
+                grid[col][row].draw();
+            }
+        }
     }
 
     public void load() {
@@ -198,4 +160,5 @@ public class Grid {
             e.printStackTrace();
         }
     }
+
 }

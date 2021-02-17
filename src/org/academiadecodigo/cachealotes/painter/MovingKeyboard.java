@@ -1,15 +1,16 @@
-package org.academiadecodigo.cachealotes;
+package org.academiadecodigo.cachealotes.painter;
 
+import org.academiadecodigo.cachealotes.grid.Grid;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 
 public class MovingKeyboard implements KeyboardHandler {
 
-    Grid grid;
+    Painter painter;
 
 
-    public MovingKeyboard(Grid grid) {
-        this.grid = grid;
+    public MovingKeyboard(Painter painter) {
+        this.painter = painter;
     }
 
     @Override
@@ -22,31 +23,31 @@ public class MovingKeyboard implements KeyboardHandler {
 
         switch(keyboardEvent.getKey()) {
             case KeyboardEvent.KEY_UP:
-                grid.moveUP();
+                painter.brush.moveUP();
                 break;
 
             case KeyboardEvent.KEY_DOWN:
-                grid.moveDown();
+                painter.brush.moveDown();
                 break;
 
             case KeyboardEvent.KEY_LEFT:
-                grid.moveLeft();
+                painter.brush.moveLeft();
                 break;
 
             case KeyboardEvent.KEY_RIGHT:
-                grid.moveRight();
+                painter.brush.moveRight();
                 break;
             case KeyboardEvent.KEY_SPACE:
-                grid.paint();
+                painter.paint();
                 break;
             case KeyboardEvent.KEY_C:
-                grid.clear();
+                painter.clear();
                 break;
             case KeyboardEvent.KEY_L:
-                grid.load();
+                painter.load();
                 break;
             case KeyboardEvent.KEY_S:
-                grid.save();
+                painter.save();
                 break;
             case KeyboardEvent.KEY_X:
                 System.exit(0);
