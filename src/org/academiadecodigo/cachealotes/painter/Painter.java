@@ -17,7 +17,7 @@ public class Painter {
 
 
     public Painter(int col,int row) {
-        this.grid = new Grid(col,row);
+       // this.grid = new Grid(col,row);
         brush = new Brush(col,row);
         init();
     }
