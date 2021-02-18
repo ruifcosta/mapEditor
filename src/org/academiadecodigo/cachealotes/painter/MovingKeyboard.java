@@ -4,6 +4,11 @@ import org.academiadecodigo.cachealotes.grid.Grid;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardEvent;
 import org.academiadecodigo.simplegraphics.keyboard.KeyboardHandler;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+
 public class MovingKeyboard implements KeyboardHandler {
 
     Painter painter;
@@ -50,6 +55,11 @@ public class MovingKeyboard implements KeyboardHandler {
                 painter.save();
                 break;
             case KeyboardEvent.KEY_X:
+                try {
+                    boolean result= Files.deleteIfExists(Path.of("grid.txt"));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 System.exit(0);
                 break;
 
